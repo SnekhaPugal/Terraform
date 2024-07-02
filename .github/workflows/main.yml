@@ -30,8 +30,8 @@ jobs:
         run: echo ${{ secrets.AWS_ACCESS_KEY_ID | length }}
       - name: Debug AWS Secret Access Key
         run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY | length }}
-      - name: Print environment variables
-        run: printenv | grep AWS
+     # - name: Print environment variables
+        #run: printenv | grep AWS
       - name: Terraform version
         run: terraform -v
       - name: Terraform Init
