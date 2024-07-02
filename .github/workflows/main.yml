@@ -27,9 +27,9 @@ jobs:
         with:
           terraform_version: 1.8.5
       - name: Debug AWS Access Key ID
-        run: echo ${{ secrets.AWS_ACCESS_KEY_ID | length }}
+        run: echo ${{ secrets.AWS_ACCESS_KEY_ID  }}
       - name: Debug AWS Secret Access Key
-        run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY | length }}
+        run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
      # - name: Print environment variables
         #run: printenv | grep AWS
       - name: Terraform version
