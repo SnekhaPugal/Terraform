@@ -26,14 +26,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.5
-      - name:  Terraform configuration
-        run: rm -rf .terraform
-      - name: Terraform lock
-        run: rm -rf .terraform.lock.hcl
+     
       - name: Terraform version
         run: terraform -v
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
       # - name: Terraform Format
       #   run: terraform fmt -check -recursive
       - name: Terraform Validate
