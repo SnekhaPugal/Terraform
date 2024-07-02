@@ -3,7 +3,7 @@ terraform {
     bucket                 = "new-terraform-statefile"
     dynamodb_table         = "terraform-state-lock-dynamo"
     key                    = "state/terraform.tfstate"
-    region                 = "us-west-2"
+    region                 = "eu-north-1"
     
   }
 }
