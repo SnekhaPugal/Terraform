@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket                 = "loadbalancer-statefile"
     dynamodb_table         = "terraform-dynamo"
-    key                    = "newfile/terraform.tfstate"
+    key                    = "state/terraform.tfstate"
     region                 = "eu-north-1"
   }
 }
