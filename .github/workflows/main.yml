@@ -12,6 +12,7 @@ env:
   AWS_REGION: us-west-2
   AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  GITHUB_ACTIONS: ${{ secrets.GITHUB_ACTIONS}}
 jobs:
   terraform:
     name: 'Terraform'
@@ -20,10 +21,6 @@ jobs:
       run:
         working-directory: ./
     steps:
-
-      - name: Debug AWS Access Key ID Length
-        run: echo ${secrets.AWS_ACCESS_KEY_ID}
-      
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Set up Terraform
