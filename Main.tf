@@ -252,7 +252,7 @@ resource "aws_instance" "private_instance" {
 resource "aws_lb_target_group_attachment" "tg_attachment" {
   target_group_arn = aws_lb_target_group.my_target_group.arn
   target_id        = aws_instance.private_instance.id
-  port             = 8080
+  # port             = 8080
 }
 
 
