@@ -21,7 +21,7 @@ jobs:
         working-directory: ./
     steps:
       - name: check aws 
-        run: echo ${{ secrets.AWS_ACCESS_KEY_ID}}
+        run: echo "abcd---------------------------------------------------------------------------------"
       
       - name: Checkout repository
         uses: actions/checkout@v2
