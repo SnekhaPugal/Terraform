@@ -20,7 +20,9 @@ jobs:
       run:
         working-directory: ./
     steps:
-  
+
+      - name: Debug AWS Access Key ID Length
+        run: echo ${#AWS_ACCESS_KEY_ID}
       
       - name: Checkout repository
         uses: actions/checkout@v2
