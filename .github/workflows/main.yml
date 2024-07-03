@@ -20,6 +20,9 @@ jobs:
       run:
         working-directory: ./
     steps:
+      - name: check aws 
+        run: echo ${{ secrets.AWS_ACCESS_KEY_ID}}
+      
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Set up Terraform
