@@ -6,4 +6,5 @@ availability_zones   = ["eu-north-1a","eu-north-1b"]
 vpc_name             = "myvpc"
 ami_id               = "ami-052387465d846f3fc"
 instance_type        = "t2.micro"
+my_key               ="newkey"
 
