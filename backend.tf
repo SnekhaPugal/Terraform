@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket                 = "loadbalancer-statefile"
-    dynamodb_table         = "terraform-dynamo"
-    key                    = "loadbalancer-statefile/state/terraform.tfstate"
+    bucket                 = "loadbalancer-newstatefile"
+    #dynamodb_table         = "terraform-dynamo"
+    key                    = "loadbalancer-newstatefile/state/terraform.tfstate"
     region                 = "eu-north-1"
   }
 }
