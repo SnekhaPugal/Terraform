@@ -219,24 +219,30 @@ resource "aws_lb_listener" "my_lb_listener" {
 
 
 
+
 # Public Instance
 resource "aws_instance" "public_instance" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   subnet_id              = element(aws_subnet.public.*.id, 0)
   vpc_security_group_ids = [aws_security_group.public_sg.id]
-  key_name               = var.my_key
+  key_name               = aws_key_pair.my_key
+
   tags = {
     Name = "Public Instance"
   }
 }
+
 # Private Instance with Tomcat Installation and NAT Gateway Configuration
 resource "aws_instance" "private_instance" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   subnet_id              = element(aws_subnet.private.*.id, 0)
   vpc_security_group_ids = [aws_security_group.private_sg.id]
-  key_name               = var.my_key
+  key_name               = aws_key_pair.my_key
+
+ 
+
   tags = {
     Name = "Private Instance"
   }
