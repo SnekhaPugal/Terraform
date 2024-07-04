@@ -1,37 +1,44 @@
-name: Deploy Tomcat
+name: Build and Deploy to EC2
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Install AWS CLI
-      run: sudo apt-get install -y awscli
-    - name: Configure AWS CLI
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region ${{ secrets.AWS_REGION }}
-    - name: Start EC2 Instance
-      run: |
-        aws ec2 start-instances --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
-        aws ec2 wait instance-running --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
-    - name: Install Tomcat
-      env:
-        EC2_USER: ec2-user
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-      #  EC2_KEY: ${{ secrets.EC2_KEY }}
-      run: |
-        echo "${{ secrets.EC2_PRIVATE_KEY }}" > snekha.pem
-        chmod 400 snekha.pem
-        ssh -tt  "snekha.pem" ${EC2_USER}@${EC2_HOST} << 'EOT'
-          sudo yum install tomcat
-          sudo yum install tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc
-          sudo systemctl start tomcat
-          sudo systemctl enable tomcat
-          sudo systemctl restart tomcat
-        EOT
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11.0.23'
+
+
+      - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_KEY: ${{ secrets.EC2_KEY }}
+        run: |
+          sudo yum install -y openssh-client
+          echo "${EC2_KEY}" > private_key
+          chmod 400 private_key
+
+          # SSH into EC2 and deploy the application
+          ssh -o StrictHostKeyChecking=no -i private_key ${EC2_USER}@${EC2_HOST} << 'EOF'
+               wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz
+               tar xvzf apache-tomcat-9.0.90.tar.gz
+               cd /apache-tomcat-9.0.90/bin/
+               ./startup.sh
+            
+          EOF
+
+     
+
+        
