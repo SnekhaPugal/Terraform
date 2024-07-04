@@ -19,7 +19,13 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-
+      - name: Install AWS CLI
+        run: sudo apt-get install -y awscli
+      - name: Configure AWS CLI
+        run: |
+        aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.EC2_REGION }}
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
