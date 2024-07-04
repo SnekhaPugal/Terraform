@@ -26,17 +26,12 @@ jobs:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_KEY: ${{ secrets.EC2_KEY }}
       run: |
-        echo "${{ secrets_EC2_PRIVATE_KEY }}" > ec2-key.pem
-        chmod 400 ec2-key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
-          sudo apt update
-          sudo apt install -y openjdk-11-jdk
-          wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
-          sudo mkdir -p /opt/tomcat
-          sudo tar xzvf apache-tomcat-9.0.65.tar.gz -C /opt/tomcat --strip-components=1
-          sudo chown -R ${USER}:${USER} /opt/tomcat
-          sudo chmod +x /opt/tomcat/bin/*.sh
-          sudo cp /opt/tomcat/bin/catalina.sh /etc/init.d/tomcat
-          sudo update-rc.d tomcat defaults
-          sudo service tomcat start
+        echo "${{ secrets_EC2_PRIVATE_KEY }}" > snekha.pem
+        chmod 400 snekha.pem
+        ssh -o StrictHostKeyChecking=no -i snekha.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+          sudo yum install tomcat
+          sudo yum install tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc
+          sudo systemctl start tomcat
+          sudo systemctl enable tomcat
+          sudo systemctl restart tomcat
         EOF
