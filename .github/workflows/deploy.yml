@@ -35,7 +35,7 @@ jobs:
           java --version
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz.asc
           sudo mv apache-tomcat-9.0.90 /opt/tomcat
-          sudo /opt/tomcat/bin/startup.sh
+          sudo /opt/tomcat/apache-tomcat-9.0.90/bin/startup.sh
           
         EOF
 
