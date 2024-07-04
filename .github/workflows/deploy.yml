@@ -26,9 +26,9 @@ jobs:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_KEY: ${{ secrets.EC2_KEY }}
       run: |
-        echo "${{ secrets.EC2_PRIVATE_KEY }}" > ec2-key.pem
-        chmod 400 ec2-key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${EC2_USER}@${EC2_HOST} << EOF
+        echo "${{ secrets.EC2_PRIVATE_KEY }}" > snekha.pem
+        chmod 400 snekha.pem
+        ssh -o StrictHostKeyChecking=no -i snekha.pem ${EC2_USER}@${EC2_HOST} << EOF
           sudo yum update
           sudo yum install -y openjdk-11-jdk
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
