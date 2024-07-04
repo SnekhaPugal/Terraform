@@ -29,8 +29,8 @@ jobs:
         echo "${{ secrets.EC2_PRIVATE_KEY }}" > ec2-key.pem
         chmod 400 ec2-key.pem
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${EC2_USER}@${EC2_HOST} << EOF
-          sudo apt update
-          sudo apt install -y openjdk-11-jdk
+          sudo yum update
+          sudo yum install -y openjdk-11-jdk
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
           sudo mkdir -p /opt/tomcat
           sudo tar xzvf apache-tomcat-9.0.65.tar.gz -C /opt/tomcat --strip-components=1
