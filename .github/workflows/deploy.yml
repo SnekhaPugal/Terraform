@@ -34,13 +34,9 @@ jobs:
           sudo yum -y install java 
           java --version
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz
-          sudo mkdir -p /opt/tomcat
-          sudo tar xzvf apache-tomcat-9.0.65.tar.gz -C /opt/tomcat --strip-components=1
-          sudo chown -R ${USER}:${USER} /opt/tomcat
-          sudo chmod +x /opt/tomcat/bin/*.sh
-          sudo cp /opt/tomcat/bin/catalina.sh /etc/init.d/tomcat
-          sudo update-rc.d tomcat defaults
-          sudo service tomcat start
+          sudo su-
+          tar xzvf apache-tomcat-9.0.90
+          cd apache-tomcat-9.0.90/bin/startup.sh
           
         EOF
 
