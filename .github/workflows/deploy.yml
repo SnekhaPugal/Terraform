@@ -28,7 +28,7 @@ jobs:
       run: |
         echo "${{ secrets.EC2_PRIVATE_KEY }}" > snekha.pem
         chmod 400 snekha.pem
-        ssh -tt  snekha.pem ${EC2_USER}@${EC2_HOST} << 'EOT'
+        ssh -tt  "snekha.pem" ${EC2_USER}@${EC2_HOST} << 'EOT'
           sudo yum install tomcat
           sudo yum install tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc
           sudo systemctl start tomcat
