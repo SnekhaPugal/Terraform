@@ -1,0 +1,46 @@
+name: Deploy Tomcat
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Install AWS CLI
+      run: sudo apt-get install -y awscli
+    - name: Configure AWS CLI
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_REGION }}
+    - name: Start EC2 Instance
+      run: |
+        aws ec2 start-instances --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
+        aws ec2 wait instance-running --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
+    - name: Install Tomcat
+      env:
+        EC2_USER: ec2-user
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
+      run: |
+        echo "${{EC2_KEY }}" > ec2-key.pem
+        chmod 400 ec2-key.pem
+        ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+          sudo yum update
+          sudo yum install java
+          wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz
+          sudo mkdir -p /opt/tomcat
+          sudo tar xzvf apache-tomcat-9.0.90.tar.gz -C /opt/tomcat --strip-components=1
+          sudo chown -R ${USER}:${USER} /opt/tomcat
+          sudo chmod +x /opt/tomcat/bin/*.sh
+          sudo cp /opt/tomcat/bin/catalina.sh /etc/init.d/tomcat
+          sudo update-rc.d tomcat defaults
+          sudo service tomcat start
+        EOF
+
+     
+
+        
