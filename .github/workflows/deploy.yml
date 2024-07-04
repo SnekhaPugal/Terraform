@@ -28,10 +28,10 @@ jobs:
       run: |
         echo "${{ secrets.EC2_PRIVATE_KEY }}" > snekha.pem
         chmod 400 snekha.pem
-        ssh -tt StrictHostKeyChecking=no -i snekha.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+        ssh -tt StrictHostKeyChecking=no -i snekha.pem ${EC2_USER}@${EC2_HOST} << 'EOT'
           sudo yum install tomcat
           sudo yum install tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc
           sudo systemctl start tomcat
           sudo systemctl enable tomcat
           sudo systemctl restart tomcat
-        EOF
+        EOT
