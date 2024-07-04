@@ -31,7 +31,7 @@ jobs:
         chmod 400 ec2-key.pem
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ec2-user@${EC2_HOST} << 'EOF'
           sudo yum update
-          sudo yum install java
+          sudo yum -y install java 
           java --version
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz
           sudo tar xzvf apache-tomcat-9.0.90.tar.gz 
