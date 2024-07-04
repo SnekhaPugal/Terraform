@@ -13,9 +13,9 @@ jobs:
       run: sudo apt-get install -y awscli
     - name: Configure AWS CLI
       run: |
-        aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
-        aws configure set region ${{ secrets.EC2_REGION }}
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_EC2_REGION }}
     - name: Start EC2 Instance
       run: |
         aws ec2 start-instances --instance-ids ${{ secrets.EC2_INSTANCE_ID }}
