@@ -38,6 +38,6 @@ jobs:
           cd apache-tomcat-9.0.90
           cd bin
           ./startup.sh
-     
+        EOF
 
         
