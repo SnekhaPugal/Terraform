@@ -34,7 +34,8 @@ jobs:
           sudo yum -y install java 
           java --version
           wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.90/bin/apache-tomcat-9.0.90.tar.gz.asc
-          cd  usr/bin/startup.sh
+          sudo mv apache-tomcat-9.0.90 /opt/tomcat
+          sudo /opt/tomcat/bin/startup.sh
           
         EOF
 
