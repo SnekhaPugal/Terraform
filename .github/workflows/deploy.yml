@@ -39,4 +39,4 @@ jobs:
           sudo cp /opt/tomcat/bin/catalina.sh /etc/init.d/tomcat
           sudo update-rc.d tomcat defaults
           sudo service tomcat start
-          EOF
+        EOF
